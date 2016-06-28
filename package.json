@@ -1,0 +1,25 @@
+{
+  "name": "dnd-5e-cr-calculator",
+  "version": "0.1.0",
+  "description": "A calculator for D&D 5e's Challenge Rating statistic.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepreindex": "rm -rf dist/",
+    "preindex": "coffee --compile --output dist/ src/",
+    "index": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AsmodeusXI/dnd-5e-cr-calculator.git"
+  },
+  "author": "Sam Lawton <sam.h.lawton@gmail.com> (http://www.realmshaper.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AsmodeusXI/dnd-5e-cr-calculator/issues"
+  },
+  "homepage": "https://github.com/AsmodeusXI/dnd-5e-cr-calculator#readme",
+  "dependencies": {
+    "coffee-script": "^1.10.0"
+  }
+}
