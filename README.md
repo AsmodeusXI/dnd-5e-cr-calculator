@@ -6,7 +6,6 @@ The main function of the CR Calculator is is `calculate()` and it takes five arg
 
 ```javascript
 // An example
-
 var cr = require('dnd-5e-cr-calculator');
 
 // Arguments in order: HP, AC, DpR, Atk, Save DC

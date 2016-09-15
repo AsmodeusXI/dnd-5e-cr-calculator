@@ -9,6 +9,7 @@ script:
 before_deploy:
 - npm run compile
 deploy:
+  skip_cleanup: true
   provider: npm
   email: asmodeusxi@gmail.com
   on:
