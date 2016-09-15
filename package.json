@@ -1,6 +1,6 @@
 {
   "name": "dnd-5e-cr-calculator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A calculator for D&D 5e's Challenge Rating statistic.",
   "main": "dist/calculateChallengeRating.js",
   "scripts": {
