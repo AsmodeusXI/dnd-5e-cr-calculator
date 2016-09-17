@@ -6,10 +6,8 @@
   "scripts": {
     "test": "coffeetape --stderr ./src/**/*Spec.coffee | faucet",
     "test:watch": "watch 'npm run test' src",
-    "precompile": "rm -rf dist/ && mkdir dist && mkdir dist/config",
-    "compile:coffee": "coffee --compile --output dist/ src/",
-    "compile:config": "cp ./src/config/challengeThresholds.json ./dist/config/challengeThresholds.json",
-    "compile": "npm run compile:coffee && npm run compile:config"
+    "precompile": "rm -rf dist/ && mkdir dist",
+    "compile": "coffee --compile --output dist/ src/calculateChallengeRating.coffee"
   },
   "repository": {
     "type": "git",
