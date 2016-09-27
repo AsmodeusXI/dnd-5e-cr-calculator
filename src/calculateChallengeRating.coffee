@@ -1,5 +1,7 @@
 _ = require 'lodash'
 
+diceInputErrorMsg = "All dice inputs need to be in the following format: {number}d{number}\+{number}-{number}."
+
 calculate = (hp, ac, dpr, atk, sdc) ->
 
   throw "Zero or lower values are not allowed for Hit Points." if hp <= 0
@@ -51,8 +53,35 @@ calculate = (hp, ac, dpr, atk, sdc) ->
 roundUpDifference = (one, two) ->
   _.ceil((one - two)/2)
 
+calculateWithDice = (hp, ac, diceDpr, atk, sdc) ->
+  avgDpr = getAverageDieValue diceDpr
+  calculate hp, ac, avgDpr, atk, sdc
+
+getAverageDieValue = (diceDpr) ->
+  dprComponents = diceDpr.split(/(\dd\d|\-|\+)/)
+  averageComponents = []
+  componentModifier = 1
+  for component in dprComponents
+    if component.match(/\dd\d/)
+      numberComponent = parseInt(component[0])
+      dieValueComponent = parseInt(component[2])
+      localDprAverage = ((dieValueComponent + 1) * numberComponent)/2
+      averageComponents.push localDprAverage * componentModifier
+    else if component.match(/\+/)
+      componentModifier = 1
+    else if component.match(/\-/)
+      componentModifier = -1
+    else if component.match(/^[0-9]+$/)
+      averageComponents.push parseInt(component) * componentModifier
+    else if component is ''
+      continue
+    else
+      throw diceInputErrorMsg
+  Math.round(_.sum averageComponents)
+
 module.exports = {
   calculate: calculate
+  calculateWithDice: calculateWithDice
 }
 
 # CR Information

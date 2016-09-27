@@ -138,3 +138,85 @@ test 'calculate() defaults to CR 30 when arguments are higher than CR 30', (asse
   assert.equals actual, expected, "Expected offense numbers that exceeded those of CR 30 to result in CR 30."
 
   assert.end()
+
+test 'calculateWithDice() determines the correct DPR with which to calculate CR', (assert) ->
+
+  actual = cr.calculateWithDice 60, 13, '6d6', 4, 12
+  expected = '2'
+
+  assert.equals actual, expected, "Expected the average DPR to be 21, yielding a result of CR 2."
+
+  actual = cr.calculateWithDice 45, 13, '1d6+2', 3, 13
+  expected = '1/2'
+
+  assert.equals actual, expected, "Expected the average DPR to be 6, yielding a result of CR 1/2."
+
+  actual = cr.calculateWithDice 45, 13, '1d4-2', 3, 13
+  expected = '1/8'
+
+  assert.equals actual, expected, "Expected the average DPR to be 1, yielding a result of CR 1/8"
+
+  actual = cr.calculateWithDice 170, 15, '6d6+8d6', 6, 15
+  expected = '7'
+
+  assert.equals actual, expected, "Expected the average DPR to be 49, yielding a result of CR 7"
+
+  actual = cr.calculateWithDice 170, 15, '6d6+8d6+10', 6, 15
+  expected = '8'
+
+  assert.equals actual, expected, "Expected the average DPR to be 59, yielding a result of CR 8"
+
+  actual = cr.calculateWithDice 30, 13, '3d4-6', 3, 13
+  expected = '1/8'
+
+  assert.equals actual, expected, "Expected the average DPR to be 2, yielding a result of CR 1/8"
+
+  actual = cr.calculateWithDice 120, 14, '3d4+10+6d6-10', 5, 14
+  expected = '4'
+
+  assert.equals actual, expected, "Expected the average DPR to be 29, yielding a result of CR 4"
+
+  assert.end()
+
+test 'calculateWithDice() throws the correct errors when provided invalid formats', (assert) ->
+
+  # Array OoB error
+  actual = ->
+    cr.calculateWithDice 60, 13, 'd6', 4, 12
+  expected = /All dice inputs need to be in the following format: {number}d{number}\+{number}-{number}\./
+
+  assert.throws actual, expected, "Expected an informative error message when dice in the format 'd{number}'."
+
+  actual = ->
+    cr.calculateWithDice 60, 13, '6d', 4, 12
+
+  assert.throws actual, expected, "Expected an informative error message when dice in the format '{number}d'."
+
+  # Number Parsing error
+  actual = ->
+    cr.calculateWithDice 60, 13, 'td6', 4, 12
+
+  assert.throws actual, expected, "Expected an informative error message when dice in the format '{letter}d{number}'"
+
+  actual = ->
+    cr.calculateWithDice 60, 13, '6dt', 4, 12
+
+  assert.throws actual, expected, "Expected an informative error message when dice in the format '{number}d{letter}'"
+
+  actual = ->
+    cr.calculateWithDice 50, 15, 'breakbreakbreak', 5, 17
+
+  assert.throws actual, expected, "Expected an informative error message when bad data is passed in."
+
+  actual = ->
+    cr.calculateWithDice 60, 13, '-6d6', 4, 12
+  expected = /Negative values are not allowed for Damage per Round\./
+
+  assert.throws actual, expected, "Expected a negative die value to result in a negative value error"
+
+  actual = ->
+    cr.calculateWithDice 60, 13, '4d4-6d6', 4, 12
+
+  assert.throws actual, expected, "Expected a negative die value to result in a negative value error"
+
+  assert.end()
