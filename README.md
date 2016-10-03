@@ -24,7 +24,7 @@ var cr = require('dnd-5e-cr-calculator');
 // Arguments: HP, AC, DpR in dice format, Atk, Save DC
 var value = cr.calculateWithDice(5, 14, '7d6+5', 5, 14)
 
-// value should equal '1'
+// value should equal '1' because '7d6+5' averages to 30
 console.log("Your challenge rating is: " + value);
 ```
 
