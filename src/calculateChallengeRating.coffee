@@ -58,13 +58,14 @@ calculateWithDice = (hp, ac, diceDpr, atk, sdc) ->
   calculate hp, ac, avgDpr, atk, sdc
 
 getAverageDieValue = (diceDpr) ->
-  dprComponents = diceDpr.split(/(\dd\d|\-|\+)/)
+  dprComponents = diceDpr.split(/(\d+d\d+|\-|\+)/)
   averageComponents = []
   componentModifier = 1
   for component in dprComponents
-    if component.match(/\dd\d/)
-      numberComponent = parseInt(component[0])
-      dieValueComponent = parseInt(component[2])
+    if component.match(/\d+d\d+/)
+      componentSplit = component.split(/d/)
+      numberComponent = parseInt(componentSplit[0])
+      dieValueComponent = parseInt(componentSplit[1])
       localDprAverage = ((dieValueComponent + 1) * numberComponent)/2
       averageComponents.push localDprAverage * componentModifier
     else if component.match(/\+/)
