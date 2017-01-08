@@ -178,7 +178,6 @@ test 'calculateWithDice() determines the correct DPR with which to calculate CR'
 
   actual = cr.calculateWithDice 5, 14, '4d10+8', 5, 14
   expected = '1'
-  console.error('end')
 
   assert.equals actual, expected, "Expected the average DPR to be 30, yielding a result of CR 1"
 
